@@ -36,10 +36,6 @@ void setup() {
 
   delay(5000);      //Aguarda os 5 segunndos 
   digitalWrite(8,1);    //Seta o STBY para ativado
-//---------------------------------------------------------------------------------------
-  analogWrite(11,100);  //perguntar pro Lucca pq setar o pwm dos motores aqui
-  analogWrite(5,100);   //perguntar pro Lucca pq setar o pwm dos motores aqui
-//---------------------------------------------------------------------------------------
 
   if(digitalRead(4)==1){    //--------------------------//
     direcao = true;     //-Seta para girar para XXX-//
@@ -54,7 +50,7 @@ void setup() {
     digitalWrite(7,0);    //----------COMEÇA----------//
     digitalWrite(6,1);    //-------PARA FRENTE--------//
     analogWrite(11,255);  //--------------------------//
-    analogWrite(5,160);   //--------------------------//
+    analogWrite(5,255);   //--------------------------//
     delay(500);       //--------------------------//
 
   }
@@ -103,25 +99,7 @@ void setup() {
 }
   
 void loop() {
-  if(direcao){
-
-        digitalWrite(10,1); //-----------------------//
-        digitalWrite(9,0);  //-----------------------//
-        digitalWrite(7,0);  //--------Procura--------//
-        digitalWrite(6,1);  //----------XXX----------//
-        analogWrite(11,90); //-----------------------//
-        analogWrite(5,90);  //-----------------------//
-
-      }else{
-
-        digitalWrite(10,0); //-----------------------//
-        digitalWrite(9,1);  //-----------------------//
-        digitalWrite(7,1);  //--------Procura--------//
-        digitalWrite(6,0);  //----------YYY----------//
-        analogWrite(11,90); //-----------------------//
-        analogWrite(5,90);  //-----------------------//
-      }
-/*  while(analogRead(A0)>500 && analogRead(A1)>500){
+  while(analogRead(A0)>500 && analogRead(A1)>500){
 
     if(analogRead(A3)>20){
 
@@ -180,5 +158,4 @@ void loop() {
   analogWrite(11,200);  //--------Linha----------//
   analogWrite(5,200);   //-----------------------//
   delay(400);       //-----------------------//
-  */  
 }
