@@ -73,7 +73,11 @@ void setup() {
   //Valores iniciais do sensor
   yInicial = mpu.getAngleY();
   if(digitalRead(dip2)==1){
-    drift();
+    tras(255,255);
+    delay(200);
+  }
+  if(digitalRead(dip3)==1){
+    drift();  
   }
 }
  
@@ -85,37 +89,34 @@ void loop() {
   valorSensor2 = analogRead(linha2);
   float yAtual = mpu.getAngleY();
 
-  if(direc==1){
+
+    
+ if(yAtual < (yInicial - 1.5)){
+    //Serial.println("Levantado");
+    tras(a,b);
+    }
+   
+//segue adversário
+//rever, provavelmente vai bugar
+  if(sharp1 < 500 || sharp2 < 500){
+    frente(a, b);
+    if(sharp1 < sharp2){
+      frente(100, 80);
+    }else{
+      frente(80, 100);
+    }
+  }else if(direc==1){
     direita(a, b);
   }else{
     esquerda(a,b);  
   }
-  /*  
- if(yAtual < (yInicial - 1.5)){
-    //Serial.println("Levantado");
-    fugaLinha();
-    }else{frente(a, b);}
-   
-//segue adversário
-//rever, provavelmente vai bugar
-  /*if(sharp1 < 500 || sharp2 < 500){
-      frente(a, b);
-      if(sharp1 < sharp2){
-        direita(a, b);
-        frente(a, b);
-        }
-        else{
-          esquerda(a, b);
-          frente(a, b);
-          }
-    }
 
   if(valorSensor2 < 500 || valorSensor2 < 500){
    fugaLinha();
-    }
+  }
   
   //Giroscopio: utilizar angulo y(rampado ou não) e z(pegou de lado)
-  Serial.print("angleX : ");
+  /*Serial.print("angleX : ");
   Serial.print(mpu.getAngleX());
   Serial.print("\tangleY : ");
   Serial.print(mpu.getAngleY());
@@ -128,14 +129,14 @@ void loop() {
   Serial.print("x atual: ");
   Serial.println(xAccInicial);
   Serial.print("y atual");
-  Serial.println(yAccInicial);
-*/
+  Serial.println(yAccInicial);*/
+
 }
 
 
 
 
-void frente(int pa, int pb){
+void tras(int pa, int pb){
   digitalWrite(b1,1);
   digitalWrite(b2,0);
   digitalWrite(a1,1);
@@ -143,7 +144,7 @@ void frente(int pa, int pb){
   analogWrite(pwmB, pb);
   analogWrite(pwmA, pa);
 }
-void tras(int pa, int pb){
+void frente(int pa, int pb){
   digitalWrite(b1,0);
   digitalWrite(b2,1);
   digitalWrite(a1,0);
@@ -171,17 +172,18 @@ void direita(int pa, int pb){
   
 void fugaLinha(){
   if(valorSensor1 > valorSensor2){
+      tras(a, b);
+      delay(100);
       direita(a, b);
-      frente(a, b);
+      delay(100);
     }
     else{
       tras(a, b);
+      delay(100);
       esquerda(a, b);
+      delay(100);
      }
-  }
-  void fugaAdv(){
-  tras(240, 240);
-  }
+}
 
 void drift(){
   if(direc==1){
@@ -196,6 +198,5 @@ void drift(){
     frente(250,100);
     delay(500);
   }
-  direc=!direc;
-  loop();
+  direc = !direc;
 }
