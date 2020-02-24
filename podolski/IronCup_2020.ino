@@ -61,71 +61,80 @@ void setup() {
   pinMode(13,INPUT); //Botao de start (onofre)
   while(digitalRead(13)==1){} //Aguarda o botao onofre ser ativado
 
-  delay(5000); //Aguarda os 5 segunndos
   digitalWrite(8,1); //Seta o STBY para ativado
-  executa_estrategia();
+  delay(2000); //Aguarda os 5 segunndos
+  
+  //executa_estrategia();
   //Começa o round efetivamente
 
-  //Serial.begin(9600);
+  Serial.begin(9600);
   //mantido para ocasional debug
 }
 
 void loop() {
-  while((analogRead(A1)>250) && (analogRead(A2)>250)){
+  while((analogRead(A1)>500) && (analogRead(A0)>500)){
     //enquanto estiver no preto
+  //while(true){
+    
+    /*Serial.print("\nLinhas--->Esquerda: ");
+    Serial.print(analogRead(A1));
+    Serial.print("      Direita: ");
+    Serial.print(analogRead(A0));*/
+
 
     busca_oponente();
+    //Serial.println(oponente);
     switch (oponente) {
       // Vide Tabela de Conversão no void busca_oponente()
       case 0:
         if (direcao) {
-          move('D','F', 150);
-          move('E','T', 150);
+          move('D','F', 75);
+          move('E','T', 75);
         }else{
-          move('D','T', 150);
-          move('E','F', 150);
+          move('D','T', 75);
+          move('E','F', 75);
         }
           break;
       case 1:
-        move('D','F', 50);
-        move('E','F', 250);
+        move('D','F', 25);
+        move('E','F', 100);
         direcao = false;
         break;
       case 2:
-        move('D','F', 250);
-        move('E','F', 250);
+        move('D','F', 100);
+       /move('E','F', 100)
         break;
       case 3:
-        move('D','F', 200);
-        move('E','F', 250);
+        move('D','F', 75);
+        move('E','F', 100);
         direcao = false;
         break;
       case 4:
-        move('D','F', 50);
-        move('E','F', 250);
+        move('D','F', 25);
+        move('E','F', 100);
         direcao = true;
         break;
       case 5:
-        move('D','F', 250);
-        move('E','F', 250);
+        move('D','F', 100);
+        move('E','F', 100)
         break;
       case 6:
-        move('D','F', 250);
-        move('E','F', 200);
+        move('D','F', 100);
+        move('E','F', 75);
         direcao = true;
         break;
       case 7:
-        move('D','F', 250);
-        move('E','F', 250);
+        move('D','F', 100);
+        move('E','F', 100);
         break;
       default:
-      //caso a ariavel esteja com valor bugado apenas roda
+      //caso a variavel esteja com valor bugado apenas roda
         if (direcao) {
-          move('D','F', 150);
-          move('E','T', 150);
+          move('D','F', 75);
+          move('E','T', 75);
         }else{
-          move('D','T', 150);
-          move('E','F', 150);
+          move('D','T', 75);
+          move('E','F', 75);
         }
           break;
     }
@@ -213,9 +222,15 @@ void busca_oponente(){
 
   oponente = 0;//zera a variavel para nova interação
 
-  if (analogRead(A2)>20){ oponente += 2^0; }
-  if (analogRead(A3)>20){ oponente += 2^1; }
-  if (analogRead(A4)>20){ oponente += 2^2; }
+  if (analogRead(A2)>40){ oponente += 2^0; }//direita
+  if (analogRead(A3)>30){ oponente += 2^1; }//frontal
+  if (analogRead(A4)>40){ oponente += 2^2; }//esquerda
+  /*Serial.print("\nDistancia--->Esquerda: ");
+  Serial.print(analogRead(A4));
+  Serial.print("      Frente: ");
+  Serial.print(analogRead(A3));
+  Serial.print("      Direita: ");
+  Serial.print(analogRead(A2));*/
 
   /*
 
