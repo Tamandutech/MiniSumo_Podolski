@@ -87,7 +87,6 @@ void loop() {
   while((analogRead(A1)>400) && (analogRead(A0)>400)){
     //enquanto estiver no preto
 
-
     busca_oponente();
     switch (oponente) {
       // Vide Tabela de Conversão no void busca_oponente()
@@ -340,8 +339,52 @@ void executa_estrategia(){
       delay(200);
       break;
     case 4:
+      /*
+        -->Correção:
+        Corrige apenas um pouco
+        para ficar exatamente de frente 
+        para o oponente
+      */
+      if (direcao){
+        move('D','F', 255);
+        move('E','T', 255);
+      }else{
+        move('D','T', 255);
+        move('E','F', 255);
+      }
+      delay(75);
       break;
     case 5:
+      /*
+        -->Baby_Shark:
+        Fica virando d pouquinho em pouquinho 
+        o robo enquanto busca o oponente.
+        Posicionar o robo ao fundo do dojo.
+      */
+      busca_oponente();
+      while(oponente == 0){
+        busca_oponente();
+        if (direcao){
+          move('E','F', 150);
+        }else{
+          move('D','F', 150);
+        }
+        direcao = !direcao;
+        delay(100);
+      }
+
+      //avança ate a beirada
+      move('D','F', 255);
+      move('E','F', 255);
+      delay(400);
+
+      //vira de frente para o meio
+      delay(250);
+      //para 
+      move('D','F', 0);
+      move('E','T', 0);
+
+      //aguarda perceber o oponente
       break;
     case 6:
       break;
